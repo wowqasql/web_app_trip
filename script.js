@@ -1,3 +1,80 @@
+
+
+// Получить ID пользователя из URL (если он передается с Telegram)  
+const userId = new URLSearchParams(window.location.search).get('user_id');
+console.log(userId)
+
+document.getElementById('addCityBtn').addEventListener('click', function() {
+    const citiesContainer = document.getElementById('citiesContainer');
+    const cityCount = citiesContainer.children.length;
+
+    // Создаем новый блок города
+    const newCityDiv = document.createElement('div');
+    newCityDiv.className = 'city';
+    newCityDiv.innerHTML = `
+        <h3>Город</h3>
+        <div class="row">
+            <div>
+                <label>Город:</label>
+                <input type="text" name="city" placeholder="Введите город" required>
+            </div>
+            <div>
+                <label>Дата прибытия:</label>
+                <input type="date" name="arrivalDate" placeholder="ДД/ММ/ГГГГ" required">
+            </div>
+            <div>
+                <label>Дата выбытия:</label>
+                <input type="date" name="departureDate" required>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Дата и время вылета:</label>
+                <input type="datetime-local" name="departureTime" required>
+            </div>
+            <div>
+                <label>Дата и время прилета:</label>
+                <input type="datetime-local" name="arrivalTime" required>
+            </div>
+            <div>
+                <label>Требуется ли бронь:</label>
+                <input type="checkbox" name="bookingRequired">
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Дата и время заезда в гостиницу:</label>
+                <input type="datetime-local" name="checkInTime" required>
+            </div>
+            <div>
+                <label>Дата и время выезда из гостиницы:</label>
+                <input type="datetime-local" name="checkOutTime" required>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Комментарий к рейсу:</label>
+                <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
+            </div>
+            <div>
+                <label>Комментарий к гостинице:</label>
+                <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
+            </div>
+        </div>
+        <button class="removeCityBtn">Удалить город</button>
+    `;
+    citiesContainer.appendChild(newCityDiv);
+
+    // Обработчик для кнопки удаления
+    newCityDiv.querySelector('.removeCityBtn').addEventListener('click', function() {
+        if (cityCount > 0) {
+            citiesContainer.removeChild(newCityDiv);
+        } else {
+            alert('Нельзя удалить единственный город.');
+        }
+    });
+});
+
 document.getElementById('travelForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение формы
 
@@ -96,3 +173,10 @@ document.getElementById('travelForm').addEventListener('submit', function(event)
     // Показываем сообщение об успешной отправке
     document.getElementById('successMessage').style.display = 'block';
 });
+
+
+
+
+
+
+
