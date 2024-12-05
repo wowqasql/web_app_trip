@@ -12,15 +12,16 @@ document.getElementById('addCityBtn').addEventListener('click', function() {
     const newCityDiv = document.createElement('div');
     newCityDiv.className = 'city';
     newCityDiv.innerHTML = `
-        <h3>Город</h3>
         <div class="row">
             <div>
                 <label>Город:</label>
                 <input type="text" name="city" placeholder="Введите город" required>
             </div>
+        </div>
+        <div class="row">
             <div>
                 <label>Дата прибытия:</label>
-                <input type="date" name="arrivalDate" placeholder="ДД/ММ/ГГГГ" required">
+                <input type="date" name="arrivalDate" placeholder="ДД/ММ/ГГГГ" required>
             </div>
             <div>
                 <label>Дата выбытия:</label>
