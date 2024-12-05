@@ -2,45 +2,50 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    padding: 15px; /* Уменьшен отступ */
 }
 
 .container {
     max-width: 800px;
     margin: auto;
     background: white;
-    padding: 20px;
+    padding: 15px; /* Уменьшен отступ */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h3 {
     text-align: center;
+    margin-bottom: 5px; /* Уменьшен отступ снизу */
 }
-
 
 .city {
     border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 10px; /* Уменьшен отступ */
+    margin-bottom: 15px; /* Уменьшен отступ */
     border-radius: 5px;
 }
 
+
 label {
     display: block;
-    margin-top: 10px;
+    margin-top: 5px; /* Уменьшен отступ сверху */
     font-weight: bold;
-    /* font-size: 15px; */
+    font-size: 13px;
     color: #555;
 }
+.long_departure_date_to_hotel{
+    font-size: 12px;
+}
+
 
 input[type="text"],
 input[type="date"],
 input[type="datetime-local"],
 textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
+    width: calc(100% - 18px); /* Уменьшен отступ */
+    padding: 8px; /* Уменьшен отступ */
+    margin-top: 3px; /* Уменьшен отступ */
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -52,17 +57,17 @@ textarea {
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px; /* Уменьшен промежуток между элементами */
 }
 
 .row > div {
     flex: 1;
-    min-width: 200px; /* Минимальная ширина для полей */
+    min-width: 150px; /* Уменьшена минимальная ширина */
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px 15px;
+    margin-top: 10px; /* Уменьшен отступ сверху */
+    padding: 8px 12px; /* Уменьшен отступ */
     background-color: #28a745;
     color: white;
     border: none;

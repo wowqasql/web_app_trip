@@ -45,11 +45,11 @@
                     <div class="row">
                         <div>
                             <label>Дата и время заезда в гостиницу:</label>
-                            <input type="datetime-local" name="checkInTime" required>
+                            <input type="datetime-local" name="arrivalDateToHotel" required>
                         </div>
                         <div>
-                            <label>Дата и время выезда из гостиницы:</label>
-                            <input type="datetime-local" name="checkOutTime" required>
+                            <label class="long_departure_date_to_hotel">Дата и время выезда из гостиницы:</label>
+                            <input type="datetime-local" name="departureDateToHotel" required>
                         </div>
                     </div>
                     <div class="row">
@@ -67,7 +67,7 @@
             <button type="button" id="addCityBtn">Добавить город</button>
             <button type="submit">Отправить</button>
         </form>
-        <h1 id="successMessage" style="display: none;">Данные успешно отправлены!</h1>
+        <h3 id="successMessage" style="display: none;">Данные успешно отправлены!</h3>
     </div>
     <script src="script.js"></script>
 </body>
