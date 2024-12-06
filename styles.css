@@ -2,7 +2,8 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 10px; 
+    /* padding: 10px;  */
+    padding: 0px;
 }
 
 .container {
@@ -28,16 +29,7 @@ h3 {
 }
 
 
-label {
-    display: block;
-    margin-top: 5px; 
-    font-weight: bold;
-    font-size: 13px;
-    color: #555;
-}
-.long_departure_date_to_hotel{
-    font-size: 12px;
-}
+
 
 
 .checkbox{
@@ -64,10 +56,22 @@ textarea {
     resize: vertical;
 }
 
+label {
+    display: block;
+    margin-top: 5px; 
+    font-weight: bold;
+    font-size: 13px;
+    color: #555;
+}
+.long_lable{
+    font-size: 12px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    /* gap: 8px; */
+    gap: 4px;
 }
 
 .row > div {
