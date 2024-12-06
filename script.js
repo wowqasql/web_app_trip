@@ -122,8 +122,8 @@ document.getElementById('travelForm').addEventListener('submit', function(event)
     }
 
     // Проверка логики дат
-    if (arrivalDate < departureDate) {
-        alert('Дата прибытия должна быть позже даты выбытия!');
+    if (arrivalDate > departureDate) {
+        alert('Дата прибытия должна быть раньше даты выбытия!');
         return;
     }
     if (arrivalTime <= departureTime) {
