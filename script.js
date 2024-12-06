@@ -21,7 +21,7 @@ document.getElementById('addCityBtn').addEventListener('click', function() {
         <div class="row">
             <div>
                 <label>Дата прибытия:</label>
-                <input type="date" name="arrivalDate" placeholder="ДД/ММ/ГГГГ" required">
+                <input type="date" name="arrivalDate" required>
             </div>
             <div>
                 <label>Дата выбытия:</label>
@@ -37,7 +37,7 @@ document.getElementById('addCityBtn').addEventListener('click', function() {
                 <label>Дата и время прилета:</label>
                 <input type="datetime-local" name="arrivalTime" required>
             </div>
-            <div>
+            <div class="checkbox">
                 <label>Требуется ли бронь:</label>
                 <input type="checkbox" name="bookingRequired">
             </div>
@@ -57,6 +57,8 @@ document.getElementById('addCityBtn').addEventListener('click', function() {
                 <label>Комментарий к рейсу:</label>
                 <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
             </div>
+        </div>
+        <div class="row">
             <div>
                 <label>Комментарий к гостинице:</label>
                 <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
