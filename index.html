@@ -8,69 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h3 id="title">Укажите данные о командировке</h3>
         <form id="travelForm">
-            <div id="citiesContainer">
-                <div class="city">
-                    <div class="row">
-                        <div>
-                            <label>Город:</label>
-                            <input type="text" name="city" placeholder="Введите город" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата прибытия:</label>
-                            <input type="date" name="arrivalDate" required>
-                        </div>
-                        <div>
-                            <label>Дата выбытия:</label>
-                            <input type="date" name="departureDate" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата и время вылета:</label>
-                            <input type="datetime-local" name="departureTime" required>
-                        </div>
-                        <div>
-                            <label>Дата и время прилета:</label>
-                            <input type="datetime-local" name="arrivalTime" required>
-                        </div>
-                        <div class="checkbox">
-                            <label>Требуется ли бронь:</label>
-                            <input type="checkbox" name="bookingRequired">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата и время заезда в гостиницу:</label>
-                            <input type="datetime-local" name="arrivalDateToHotel" required>
-                        </div>
-                        <div>
-                            <label>Дата и время выезда из гостиницы:</label>
-                            <input type="datetime-local" name="departureDateToHotel" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Комментарий к рейсу:</label>
-                            <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Комментарий к гостинице:</label>
-                            <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button type="button" id="addCityBtn">Добавить город</button>
-            <button type="submit">Отправить</button>
         </form>
         <h3 id="successMessage" style="display: none;">Данные успешно отправлены!</h3>
+        <div id="check"></div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

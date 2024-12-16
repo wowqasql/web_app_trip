@@ -23,8 +23,9 @@ h3 {
 }
 
 .city {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     padding: 10px; 
+    padding-top: 0;
     margin-bottom: 15px; 
     border-radius: 5px;
 }
@@ -90,4 +91,66 @@ button:hover {
 
 .removeCityBtn{
     margin-top: 4px;
+}
+
+
+
+/* -------------CHECK CONTAINER------------------ */
+
+.check {  
+    display: flex;  
+    flex-direction: column;  
+    padding: 20px;   
+    background-color: #f9f9f9;  
+    /* border: 1px solid #ddd;    */
+    border-radius: 8px;   
+    max-width: 600px;   
+    margin: 20px auto;   
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+    overflow: hidden; /* Скрывает переполняющий текст */  
+}  
+
+.checkCity {  
+    margin-top: 20px;  
+    margin-bottom: 28px;  
+    border: 1px solid #ddd;  
+    border-radius: 8px;  
+    padding: 5px;  
+    overflow: hidden; /* Скрывает переполняющий текст */  
+}  
+
+/* Стили для каждого блока с данными о городе */  
+.check > div {  
+    padding: 15px;  
+    background-color: #fff;  
+    /* border: 1px solid #e0e0e0;   */
+    border-radius: 5px;  
+    overflow: hidden; /* Скрывает переполняющий текст */  
+    padding-top: 0;
+}  
+
+/* Стили заголовков */  
+.check h1 {
+    text-align: center;
+    font-size: 24px; /* Размер шрифта заголовка */  
+    margin-bottom: 10px; /* Отступ снизу */  
+    color: #333; /* Цвет текста */  
+}  
+
+/* Стили заголовков */  
+.check h3 {  
+    font-size: 18px;  
+    margin: 5px 0;  
+    color: #555;  
+    overflow-wrap: break-word; /* Перенос длинных слов */  
+    word-wrap: break-word; /* Для совместимости */  
+}  
+
+/* Стили для span */  
+.check span {  
+    font-size: 19px;  
+    margin: 5px 0;  
+    color: black;  
+    overflow-wrap: break-word; /* Перенос длинных слов */  
+    word-wrap: break-word; /* Для совместимости */  
 }
