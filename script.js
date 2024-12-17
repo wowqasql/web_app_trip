@@ -104,7 +104,11 @@ document.getElementById('travelForm').addEventListener('submit', function (event
         if (!isHasCity) {
             alert(`Город "${cityData.city}" не существует. Укажите город верно!`)
             cityInput.classList.add("error")
-            cityInput.focus()
+
+            setTimeout(() => {
+                cityInput.focus()
+            }, 0)
+            
             return
         } 
         else {
@@ -265,7 +269,11 @@ document.getElementById('travelForm').addEventListener('submit', function (event
             
         });
 
-        document.getElementById("cityInput").focus()
+        setTimeout(() => {
+            document.getElementById("cityInput").focus()
+        }, 0);
+        
+        
     });
 
 
