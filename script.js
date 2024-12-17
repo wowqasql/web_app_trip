@@ -1,6 +1,4 @@
-import { findCity, formRowHtml } from "./citiesData.js"
-
-
+import { findCity } from "./citiesData.js"
 
 // Создание первоначальной формы с одним городом
 const addForm = () => {
@@ -8,10 +6,60 @@ const addForm = () => {
     const newCityDiv = document.createElement('div')
     newCityDiv.className = 'city'
     newCityDiv.innerHTML = `
-                <h3 id="title">Укажите данные о командировке</h3>
                     <div id="citiesContainer">
                 <div class="city">
-                    ${formRowHtml}
+                    <div class="row">
+                        <div>
+                            <label>Город:</label>
+                            <input type="text" name="city" placeholder="Введите город" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label>Дата прибытия:</label>
+                            <input type="date" name="arrivalDate" required>
+                        </div>
+                        <div>
+                            <label>Дата выбытия:</label>
+                            <input type="date" name="departureDate" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label>Дата и время вылета:</label>
+                            <input type="datetime-local" name="departureTime" required>
+                        </div>
+                        <div>
+                            <label>Дата и время прилета:</label>
+                            <input type="datetime-local" name="arrivalTime" required>
+                        </div>
+                        <div class="checkbox">
+                            <label>Требуется ли бронь:</label>
+                            <input type="checkbox" name="bookingRequired">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label>Дата и время заезда в гостиницу:</label>
+                            <input type="datetime-local" name="arrivalDateToHotel" required>
+                        </div>
+                        <div>
+                            <label>Дата и время выезда из гостиницы:</label>
+                            <input type="datetime-local" name="departureDateToHotel" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label>Комментарий к рейсу:</label>
+                            <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label>Комментарий к гостинице:</label>
+                            <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button type="button" id="addCityBtn">Добавить город</button>
@@ -28,10 +76,10 @@ console.log(userId)
 const usersId = ['12345', '1234']
 
 if (usersId.includes(userId)) {
-    addForm()
+    alert('Заявка отсутствует')
 }
 
-
+addForm()
 
 
 // Обработчик кнопки "Добавить город"
@@ -43,7 +91,58 @@ document.getElementById('addCityBtn').addEventListener('click', function () {
     const newCityDiv = document.createElement('div')
     newCityDiv.className = 'city'
     newCityDiv.innerHTML = `
-        ${formRowHtml}
+        <div class="row">
+            <div>
+                <label>Город:</label>
+                <input type="text" name="city" placeholder="Введите город" required>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Дата прибытия:</label>
+                <input type="date" name="arrivalDate" required>
+            </div>
+            <div>
+                <label>Дата выбытия:</label>
+                <input type="date" name="departureDate" required>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Дата и время вылета:</label>
+                <input type="datetime-local" name="departureTime" required>
+            </div>
+            <div>
+                <label>Дата и время прилета:</label>
+                <input type="datetime-local" name="arrivalTime" required>
+            </div>
+            <div class="checkbox">
+                <label>Требуется ли бронь:</label>
+                <input type="checkbox" name="bookingRequired">
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Дата и время заезда в гостиницу:</label>
+                <input type="datetime-local" name="arrivalDateToHotel" required>
+            </div>
+            <div>
+                <label>Дата и время выезда из гостиницы:</label>
+                <input type="datetime-local" name="departureDateToHotel" required>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Комментарий к рейсу:</label>
+                <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Комментарий к гостинице:</label>
+                <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
+            </div>
+        </div>
         <button class="removeCityBtn">Удалить город</button>
     `;
     citiesContainer.appendChild(newCityDiv)
@@ -94,27 +193,14 @@ document.getElementById('travelForm').addEventListener('submit', function (event
 
 
     // Проходим по каждому городу и проверяем данные
-    let index = 0;
     for (const cityData of cityDataArray) {
 
         // Проверка на существующий город
         const isHasCity = findCity(cityData['city'])
-        const cityInput = citiesContainer.children[index].querySelector('input[name="city"]') // Получаем конкретный input
-
         if (!isHasCity) {
             alert(`Город "${cityData.city}" не существует. Укажите город верно!`)
-            cityInput.classList.add("error")
-
-            setTimeout(() => {
-                cityInput.focus()
-            }, 0)
-            
-            return
-        } 
-        else {
-            cityInput.classList.remove("error")
+            return;
         }
-        index++
 
 
 
@@ -265,15 +351,7 @@ document.getElementById('travelForm').addEventListener('submit', function (event
             // Показываем форму для редактирования
             document.getElementById('travelForm').style.display = 'block';
             document.getElementById('title').style.display = 'block';
-
-            
         });
-
-        setTimeout(() => {
-            document.getElementById("cityInput").focus()
-        }, 0);
-        
-        
     });
 
 

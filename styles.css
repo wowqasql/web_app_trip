@@ -23,9 +23,8 @@ h3 {
 }
 
 .city {
-    /* border: 1px solid #ddd; */
+    border: 1px solid #ddd;
     padding: 10px; 
-    padding-top: 0;
     margin-bottom: 15px; 
     border-radius: 5px;
 }
@@ -102,7 +101,7 @@ button:hover {
     flex-direction: column;  
     padding: 20px;   
     background-color: #f9f9f9;  
-    /* border: 1px solid #ddd;    */
+    border: 1px solid #ddd;   
     border-radius: 8px;   
     max-width: 600px;   
     margin: 20px auto;   
@@ -123,7 +122,7 @@ button:hover {
 .check > div {  
     padding: 15px;  
     background-color: #fff;  
-    /* border: 1px solid #e0e0e0;   */
+    border: 1px solid #e0e0e0;  
     border-radius: 5px;  
     overflow: hidden; /* Скрывает переполняющий текст */  
     padding-top: 0;
@@ -153,11 +152,4 @@ button:hover {
     color: black;  
     overflow-wrap: break-word; /* Перенос длинных слов */  
     word-wrap: break-word; /* Для совместимости */  
-}
-
-.error {
-    border: 2px solid #ff9999;
-    background-color: #ffe6e6;
-    box-shadow: 0 0 5px rgba(255, 153, 153, 0.5); 
-    transition: border-color 0.3s, background-color 0.3s; 
 }
