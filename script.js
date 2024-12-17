@@ -29,9 +29,6 @@ const usersId = ['12345', '1234']
 
 if (usersId.includes(userId)) {
     addForm()
-}else{
-    
-    // alert('Заявка отсутствует')
 }
 
 
@@ -97,14 +94,23 @@ document.getElementById('travelForm').addEventListener('submit', function (event
 
 
     // Проходим по каждому городу и проверяем данные
+    let index = 0;
     for (const cityData of cityDataArray) {
 
         // Проверка на существующий город
         const isHasCity = findCity(cityData['city'])
+        const cityInput = citiesContainer.children[index].querySelector('input[name="city"]') // Получаем конкретный input
+
         if (!isHasCity) {
             alert(`Город "${cityData.city}" не существует. Укажите город верно!`)
-            return;
+            cityInput.classList.add("error")
+            cityInput.focus()
+            return
+        } 
+        else {
+            cityInput.classList.remove("error")
         }
+        index++
 
 
 
@@ -255,7 +261,11 @@ document.getElementById('travelForm').addEventListener('submit', function (event
             // Показываем форму для редактирования
             document.getElementById('travelForm').style.display = 'block';
             document.getElementById('title').style.display = 'block';
+
+            
         });
+
+        document.getElementById("cityInput").focus()
     });
 
 

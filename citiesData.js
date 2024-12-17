@@ -2,7 +2,7 @@ export const formRowHtml = `
             <div class="row">
             <div>
                 <label>Город:</label>
-                <input type="text" name="city" placeholder="Введите город" required>
+                <input type="text" id="cityInput" name="city" placeholder="Введите город" required>
             </div>
             </div>
             <div class="row">

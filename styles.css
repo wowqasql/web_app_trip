@@ -154,3 +154,10 @@ button:hover {
     overflow-wrap: break-word; /* Перенос длинных слов */  
     word-wrap: break-word; /* Для совместимости */  
 }
+
+.error {
+    border: 2px solid #ff9999;
+    background-color: #ffe6e6;
+    box-shadow: 0 0 5px rgba(255, 153, 153, 0.5); 
+    transition: border-color 0.3s, background-color 0.3s; 
+}
