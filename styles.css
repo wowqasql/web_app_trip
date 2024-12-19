@@ -23,8 +23,9 @@ h3 {
 }
 
 .city {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     padding: 10px; 
+    padding-top: 0;
     margin-bottom: 15px; 
     border-radius: 5px;
 }
@@ -101,7 +102,7 @@ button:hover {
     flex-direction: column;  
     padding: 20px;   
     background-color: #f9f9f9;  
-    border: 1px solid #ddd;   
+    /* border: 1px solid #ddd;    */
     border-radius: 8px;   
     max-width: 600px;   
     margin: 20px auto;   
@@ -122,7 +123,7 @@ button:hover {
 .check > div {  
     padding: 15px;  
     background-color: #fff;  
-    border: 1px solid #e0e0e0;  
+    /* border: 1px solid #e0e0e0;   */
     border-radius: 5px;  
     overflow: hidden; /* Скрывает переполняющий текст */  
     padding-top: 0;
@@ -152,4 +153,37 @@ button:hover {
     color: black;  
     overflow-wrap: break-word; /* Перенос длинных слов */  
     word-wrap: break-word; /* Для совместимости */  
+}
+
+.error {
+    border: 2px solid #ff9999;
+    background-color: #ffe6e6;
+    box-shadow: 0 0 5px rgba(255, 153, 153, 0.5); 
+    transition: border-color 0.3s, background-color 0.3s; 
+}
+
+.modal {
+    display: none; /* Скрываем модальное окно по умолчанию */
+    /* display: flex; Используем Flexbox для центрирования */
+    justify-content: center; /* Центрируем по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    position: fixed; /* Фиксируем модальное окно на экране */
+    top: 0;
+    left: 0;
+    width: 100%; /* Занимаем всю ширину экрана */
+    height: 100%; /* Занимаем всю высоту экрана */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    z-index: 1000; /* Устанавливаем верхний уровень */
+}
+
+/* Стили для содержимого модального окна */
+.modalContent {
+    text-align: center;
+    background-color: white; /* Белый фон для содержимого */
+    border-radius: 8px; /* Скругленные углы */
+    padding: 20px; /* Отступы внутри */
+    max-width: 500px; /* Максимальная ширина */
+    width: 80%; /* Ширина 90% от родительского контейнера */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень */
+    margin-top: -550px;
 }

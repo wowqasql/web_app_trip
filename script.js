@@ -1,4 +1,59 @@
-import { findCity } from "./citiesData.js"
+import { findCity, formRowHtml } from "./citiesData.js"
+
+// Модалка
+const modal = document.getElementById("myModal");
+const okBtn = document.getElementById("okBtn");
+const textModal = document.getElementById("textModal");
+
+// // Обработчики закрытия модалки
+// okBtn.onclick = function () {
+//     modal.style.display = "none";
+// }
+// window.onclick = function (event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// }
+// const showModal = (text) => {
+//     modal.style.display = "flex"
+//     textModal.innerHTML = text
+// }
+
+// Функция для показа модального окна и ожидания нажатия "ОК"  
+function showModal(text) {
+    return new Promise((resolve) => {
+        // Показываем модальное окно  
+        modal.style.display = "flex";
+        textModal.innerHTML = text;
+
+        // Обработчик кнопки "ОК"  
+        const okHandler = function () {
+            modal.style.display = "none"; // Скрываем модальное окно  
+            // Удаляем обработчики после нажатия  
+            okBtn.removeEventListener('click', okHandler);
+            window.removeEventListener('click', outsideClickHandler);
+            resolve(); // Разрешаем Promise  
+        };
+
+        // Обработчик закрытия модального окна по клику вне области  
+        const outsideClickHandler = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none"; // Скрываем модальное окно  
+                // Удаляем обработчики после закрытия  
+                okBtn.removeEventListener('click', okHandler);
+                window.removeEventListener('click', outsideClickHandler);
+                resolve(); // Разрешаем Promise  
+            }
+        };
+
+        // Добавляем обработчики событий  
+        okBtn.addEventListener('click', okHandler);
+        window.addEventListener('click', outsideClickHandler);
+    });
+}
+
+
+
 
 // Создание первоначальной формы с одним городом
 const addForm = () => {
@@ -6,60 +61,10 @@ const addForm = () => {
     const newCityDiv = document.createElement('div')
     newCityDiv.className = 'city'
     newCityDiv.innerHTML = `
+                <h3 id="title">Укажите данные о командировке</h3>
                     <div id="citiesContainer">
                 <div class="city">
-                    <div class="row">
-                        <div>
-                            <label>Город:</label>
-                            <input type="text" name="city" placeholder="Введите город" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата прибытия:</label>
-                            <input type="date" name="arrivalDate" required>
-                        </div>
-                        <div>
-                            <label>Дата выбытия:</label>
-                            <input type="date" name="departureDate" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата и время вылета:</label>
-                            <input type="datetime-local" name="departureTime" required>
-                        </div>
-                        <div>
-                            <label>Дата и время прилета:</label>
-                            <input type="datetime-local" name="arrivalTime" required>
-                        </div>
-                        <div class="checkbox">
-                            <label>Требуется ли бронь:</label>
-                            <input type="checkbox" name="bookingRequired">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Дата и время заезда в гостиницу:</label>
-                            <input type="datetime-local" name="arrivalDateToHotel" required>
-                        </div>
-                        <div>
-                            <label>Дата и время выезда из гостиницы:</label>
-                            <input type="datetime-local" name="departureDateToHotel" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Комментарий к рейсу:</label>
-                            <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div>
-                            <label>Комментарий к гостинице:</label>
-                            <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
-                        </div>
-                    </div>
+                    ${formRowHtml}
                 </div>
             </div>
             <button type="button" id="addCityBtn">Добавить город</button>
@@ -76,10 +81,10 @@ console.log(userId)
 const usersId = ['12345', '1234']
 
 if (usersId.includes(userId)) {
-    alert('Заявка отсутствует')
+    addForm()
 }
 
-addForm()
+
 
 
 // Обработчик кнопки "Добавить город"
@@ -91,58 +96,7 @@ document.getElementById('addCityBtn').addEventListener('click', function () {
     const newCityDiv = document.createElement('div')
     newCityDiv.className = 'city'
     newCityDiv.innerHTML = `
-        <div class="row">
-            <div>
-                <label>Город:</label>
-                <input type="text" name="city" placeholder="Введите город" required>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <label>Дата прибытия:</label>
-                <input type="date" name="arrivalDate" required>
-            </div>
-            <div>
-                <label>Дата выбытия:</label>
-                <input type="date" name="departureDate" required>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <label>Дата и время вылета:</label>
-                <input type="datetime-local" name="departureTime" required>
-            </div>
-            <div>
-                <label>Дата и время прилета:</label>
-                <input type="datetime-local" name="arrivalTime" required>
-            </div>
-            <div class="checkbox">
-                <label>Требуется ли бронь:</label>
-                <input type="checkbox" name="bookingRequired">
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <label>Дата и время заезда в гостиницу:</label>
-                <input type="datetime-local" name="arrivalDateToHotel" required>
-            </div>
-            <div>
-                <label>Дата и время выезда из гостиницы:</label>
-                <input type="datetime-local" name="departureDateToHotel" required>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <label>Комментарий к рейсу:</label>
-                <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <label>Комментарий к гостинице:</label>
-                <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
-            </div>
-        </div>
+        ${formRowHtml}
         <button class="removeCityBtn">Удалить город</button>
     `;
     citiesContainer.appendChild(newCityDiv)
@@ -162,7 +116,7 @@ document.getElementById('addCityBtn').addEventListener('click', function () {
 
 
 // Обработчик кнопки "Отправить форму"
-document.getElementById('travelForm').addEventListener('submit', function (event) {
+document.getElementById('travelForm').addEventListener('submit', async function (event) {
     event.preventDefault(); // Предотвращаем стандартное поведение формы
 
     const citiesContainer = document.getElementById('citiesContainer');
@@ -193,42 +147,30 @@ document.getElementById('travelForm').addEventListener('submit', function (event
 
 
     // Проходим по каждому городу и проверяем данные
+    let index = 0;
     for (const cityData of cityDataArray) {
 
         // Проверка на существующий город
         const isHasCity = findCity(cityData['city'])
+        const cityInput = citiesContainer.children[index].querySelector('input[name="city"]') // Получаем конкретный input
+
         if (!isHasCity) {
-            alert(`Город "${cityData.city}" не существует. Укажите город верно!`)
-            return;
+
+            await showModal(`Город "${cityData.city}" не существует. Укажите город верно!`)
+
+            setTimeout(() => {
+                cityInput.classList.add("error")
+                cityInput.focus()
+            }, 0)
+
+            set_coursor(cityInput)
+
+            return
         }
-
-
-
-
-        // Проверка времени заезда в гостиницу позже 14:00
-        const arrivalHours = new Date(cityData.arrivalDateToHotel).getHours()
-        const arrivalMinutes = new Date(cityData.arrivalDateToHotel).getMinutes()
-
-        console.log(`arrivalHours: ${arrivalHours}`)
-        console.log(`arrivalMinutes: ${arrivalMinutes}`)
-
-        // Сравниваем время
-        if (arrivalHours < 14 || (arrivalHours === 14 && arrivalMinutes === 0)) {
-            alert("Время заезда в гостиницу в пределах или ранее 14:00 Учите тариф")
+        else {
+            cityInput.classList.remove("error")
         }
-
-
-        // Проверка времени выезда из гостиницы позже 12:00
-        const departureHours = new Date(cityData.departureDateToHotel).getHours()
-        const departureMinutes = new Date(cityData.departureDateToHotel).getMinutes()
-
-        console.log(`departureHours: ${departureHours}`)
-        console.log(`departureMinutes: ${departureMinutes}`)
-
-        // Сравниваем время
-        if (departureHours > 12 || (arrivalHours === 12 && arrivalMinutes === 0)) {
-            alert("Время выезда в пределах или позже 12:00. Учите тариф");
-        }
+        index++
 
 
 
@@ -253,24 +195,62 @@ document.getElementById('travelForm').addEventListener('submit', function (event
             arrivalDateToHotel < nowZeroHours ||
             departureDateToHotel < nowZeroHours
         ) {
-            alert(`Дата и время для города "${cityData.city}" не могут быть указаны в прошлом`);
+            await showModal(`Дата и время для города "${cityData.city}" не могут быть указаны в прошлом`)
             return;
         }
 
         // Проверка логики дат
         if (arrivalDate > departureDate) {
-            alert(`Дата прибытия для города "${cityData.city}" должна быть раньше даты выбытия!`);
+            await showModal(`Дата прибытия для города "${cityData.city}" должна быть раньше даты выбытия!`)
             return;
         }
         if (arrivalTime <= departureTime) {
-            alert(`Дата и время прилета для города "${cityData.city}" должны быть позже даты и времени вылета!`);
+            await showModal(`Дата и время прилета для города "${cityData.city}" должны быть позже даты и времени вылета!`)
             return;
         }
         if (arrivalDateToHotel >= departureDateToHotel) {
-            alert(`Дата и время заезда в гостиницу для города "${cityData.city}" должны быть позже даты и времени выезда из гостиницы!`);
+            await showModal(`Дата и время заезда в гостиницу для города "${cityData.city}" должны быть позже даты и времени выезда из гостиницы!`)
             return;
         }
+
+
+
+
+
+        // Проверка времени заезда в гостиницу позже 14:00
+        const arrivalHours = new Date(cityData.arrivalDateToHotel).getHours()
+        const arrivalMinutes = new Date(cityData.arrivalDateToHotel).getMinutes()
+
+        console.log(`arrivalHours: ${arrivalHours}`)
+        console.log(`arrivalMinutes: ${arrivalMinutes}`)
+
+        // Сравниваем время
+        if (arrivalHours < 14 || (arrivalHours === 14 && arrivalMinutes === 0)) {
+            await showModal(`Время заезда в гостиницу в пределах или ранее 14:00 Учите тариф`)
+        }
+
+
+        // Проверка времени выезда из гостиницы позже 12:00
+        const departureHours = new Date(cityData.departureDateToHotel).getHours()
+        const departureMinutes = new Date(cityData.departureDateToHotel).getMinutes()
+
+        console.log(`departureHours: ${departureHours}`)
+        console.log(`departureMinutes: ${departureMinutes}`)
+
+        // Сравниваем время
+        if (departureHours > 12 || (arrivalHours === 12 && arrivalMinutes === 0)) {
+            await showModal(`Время выезда в пределах или позже 12:00. Учите тариф`)
+
+        }
+
     }
+
+
+
+
+
+
+
 
 
 
@@ -351,7 +331,15 @@ document.getElementById('travelForm').addEventListener('submit', function (event
             // Показываем форму для редактирования
             document.getElementById('travelForm').style.display = 'block';
             document.getElementById('title').style.display = 'block';
+
+
         });
+
+        setTimeout(() => {
+            document.getElementById("cityInput").focus()
+        }, 0);
+
+
     });
 
 
@@ -370,11 +358,34 @@ document.getElementById('travelForm').addEventListener('submit', function (event
 
 
 
+    // async function sendDataToServer(data) {  
+    //     try {  
+    //         const response = await fetch('https://your-backend-url.com/api/submit', {  
+    //             method: 'POST',  
+    //             headers: {  
+    //                 'Content-Type': 'application/json',  
+    //             },  
+    //             body: JSON.stringify(data), // Преобразуем объект в JSON  
+    //         });  
+
+    //         // Проверка на успешный ответ  
+    //         if (!response.ok) {  
+    //             throw new Error(`HTTP ошибка! статус ${response.status}`);  
+    //         }  
+
+    //         const result = await response.json();  
+    //         console.log('Успех:', result);  
+    //         alert('Данные успешно отправлены!');  
+
+    //     } catch (error) {  
+    //         console.error('Ошибка:', error);  
+    //         alert('Произошла ошибка при отправке данных.');  
+    //     }  
+    // }
 
 
 
-
-    // // Отправка данных на бекенд
+    // Отправка данных на бекенд
     // fetch('https://your-backend-url.com/api/submit', {
     //     method: 'POST',
     //     headers: {
