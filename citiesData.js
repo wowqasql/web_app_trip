@@ -1,58 +1,8 @@
-export const formRowHtml = `
-            <div class="row">
-            <div>
-                <label>Город:</label>
-                <input type="text" id="cityInput" name="city" placeholder="Введите город" required>
-            </div>
-            </div>
-            <div class="row">
-            <div>
-                <label>Дата прибытия:</label>
-                <input type="date" name="arrivalDate" required>
-            </div>
-            <div>
-                <label>Дата выбытия:</label>
-                <input type="date" name="departureDate" required>
-            </div>
-            </div>
-            <div class="row">
-            <div>
-                <label>Дата и время вылета:</label>
-                <input type="datetime-local" name="departureTime" required>
-            </div>
-            <div>
-                <label>Дата и время прилета:</label>
-                <input type="datetime-local" name="arrivalTime" required>
-            </div>
-            <div class="checkbox">
-                <label>Требуется ли бронь:</label>
-                <input type="checkbox" name="bookingRequired">
-            </div>
-            </div>
-            <div class="row">
-            <div>
-                <label>Дата и время заезда в гостиницу:</label>
-                <input type="datetime-local" name="arrivalDateToHotel" required>
-            </div>
-            <div>
-                <label>Дата и время выезда из гостиницы:</label>
-                <input type="datetime-local" name="departureDateToHotel" required>
-            </div>
-            </div>
-            <div class="row">
-            <div>
-                <label>Комментарий к рейсу:</label>
-                <textarea name="flightComment" placeholder="Ваш комментарий"></textarea>
-            </div>
-            </div>
-            <div class="row">
-            <div>
-                <label>Комментарий к гостинице:</label>
-                <textarea name="hotelComment" placeholder="Ваш комментарий"></textarea>
-            </div>
-            </div>
-`
 
+// Форматирование дат в читаемый вид
+export const formattDate = (date) => {
+  return new Date(date).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).replace(',', '')
+}
 
 // Проверка на существующий город
 export const findCity = (cityName) => {
