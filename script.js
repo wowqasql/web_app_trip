@@ -308,12 +308,12 @@ document.getElementById('travelForm').addEventListener('submit', async function 
             arrivalDateToHotel < nowZeroHours ||
             departureDateToHotel < nowZeroHours
         ) {
-            await showModal(`Дата и время для города "${cityData.city}" не могут быть указаны в прошлом`)
+            await showModal(`Дата и время для города "${cityData.departureCity}" не могут быть указаны в прошлом`)
             return;
         }
 
         if (arrivalDateToHotel >= departureDateToHotel) {
-            await showModal(`Дата и время заезда в гостиницу для города "${cityData.city}" должны быть позже даты и времени выезда из гостиницы!`)
+            await showModal(`Дата и время заезда в гостиницу для города "${cityData.departureCity}" должны быть позже даты и времени выезда из гостиницы!`)
             return;
         }
 
