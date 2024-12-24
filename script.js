@@ -330,7 +330,7 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
         // Сравниваем время
         if (arrivalHours < 14 || (arrivalHours === 14 && arrivalMinutes === 0)) {
-            await showModal(`Время заезда в гостиницу в пределах или ранее 14:00 Учите тариф`)
+            await showModal(`Время заезда в гостиницу для города "${cityData.departureCity}" в пределах или ранее 14:00 Учите тариф`)
         }
 
 
@@ -343,7 +343,7 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
         // Сравниваем время
         if (departureHours > 12 || (arrivalHours === 12 && arrivalMinutes === 0)) {
-            await showModal(`Время выезда в пределах или позже 12:00. Учите тариф`)
+            await showModal(`Время выезда из гостиницы для города "${cityData.departureCity}" в пределах или позже 12:00. Учите тариф`)
 
         }
         // ---------------------------------------------------
