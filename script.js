@@ -448,7 +448,8 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
                 document.querySelector('input[name="departureDateToHotel"]').value = cityData.departureDateToHotel
 
-                document.hotelComment('textarea[name="hotelComment"]').value = cityData.departureDateToHotel
+                document.querySelector('textarea[name="hotelComment"]').value = cityData.hotelComment
+
             }
 
 
