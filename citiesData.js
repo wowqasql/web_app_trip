@@ -1,3 +1,30 @@
+// Передача данных на сервер
+
+export async function sendDataToServer(data) {
+  try {
+    const response = await fetch('https://your-backend-url.com/api/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    // Проверка на успешный ответ  
+    if (!response.ok) {
+      throw new Error(`HTTP ошибка! статус ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Успех:', result);
+    alert('Данные успешно отправлены!');
+
+  } catch (error) {
+    console.error('Ошибка:', error);
+    alert('Произошла ошибка при отправке данных.');
+  }
+}
+
 
 // Форматирование дат в читаемый вид
 export const formattDate = (date) => {

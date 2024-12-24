@@ -1,4 +1,4 @@
-import { findCity, formattDate } from "./citiesData.js"
+import { findCity, formattDate, sendDataToServer } from "./citiesData.js"
 
 import { formHotelHTML, citiesContainerHTML, formCityHTML } from "./html.js"
 
@@ -54,12 +54,12 @@ const addForm = () => {
 
 
 // Получить ID пользователя из URL (если он передается с Telegram)  
-const userId = new URLSearchParams(window.location.search).get('user_id')
-console.log(userId)
+const gandivaId = new URLSearchParams(window.location.search).get('gandiva_id')
+console.log(gandivaId)
 
 const usersId = ['12345', '1234']
 
-if (usersId.includes(userId)) {
+if (usersId.includes(gandivaId)) {
     addForm();
 }
 
@@ -474,36 +474,58 @@ document.getElementById('travelForm').addEventListener('submit', async function 
         // Сообщение "Данные успешно отправлены"
         document.getElementById('successMessage').style.display = 'block'
 
+        // Преобразование данных перед отправкой
+        //     const transformedCityDataArray = cityDataArray.map(cityData => ({
+        //         gandiva_id: gandivaId,
+        //         city1: cityData.departureCity,
+        //         city2: cityData.arrivalCity,
+        //         fly_start: cityData.departureTime,
+        //         ticket_type: cityData.typeTickets,
+        //         flight_comment: cityData.flightComment,
+        //         booking_required: cityData.bookingRequired ? cityData.bookingRequired : false,
+        //         hotel_name: cityData.bookingRequired ? cityData.hotelName : null,
+        //         arrival_date_to_hotel: cityData.bookingRequired ? cityData.arrivalDateToHotel : null,
+        //         departure_date_to_hotel: cityData.bookingRequired ? cityData.departureDateToHotel : null,
+        //         hotel_comment: cityData.bookingRequired ? cityData.hotelComment : null,
+        //     }
+        // ));
+
+        const transformedCityDataArray = cityDataArray.map(cityData => {
+            const dataToSend = {
+                gandiva_id: gandivaId,
+                city1: cityData.departureCity,
+                city2: cityData.arrivalCity,
+                fly_start: cityData.departureTime,
+                ticket_type: cityData.typeTickets,
+                flight_comment: cityData.flightComment,
+                booking_required: cityData.bookingRequired ? cityData.bookingRequired : false,
+                hotel_name: cityData.bookingRequired ? cityData.hotelName : null,
+                arrival_date_to_hotel: cityData.bookingRequired ? cityData.arrivalDateToHotel : null,
+                departure_date_to_hotel: cityData.bookingRequired ? cityData.departureDateToHotel : null,
+                hotel_comment: cityData.bookingRequired ? cityData.hotelComment : null,
+            };
+
+            // Фильтруем свойства, чтобы исключить null значения
+            return Object.fromEntries(
+                Object.entries(dataToSend).filter(([_, v]) => v !== null)
+            );
+        });
+
+
+        console.log(transformedCityDataArray)
+
+        // sendDataToServer(transformedCityDataArray)
+
+
+
+
 
     })
 
 
 
 
-    // async function sendDataToServer(data) {  
-    //     try {  
-    //         const response = await fetch('https://your-backend-url.com/api/submit', {  
-    //             method: 'POST',  
-    //             headers: {  
-    //                 'Content-Type': 'application/json',  
-    //             },  
-    //             body: JSON.stringify(data), // Преобразуем объект в JSON  
-    //         });  
 
-    //         // Проверка на успешный ответ  
-    //         if (!response.ok) {  
-    //             throw new Error(`HTTP ошибка! статус ${response.status}`);  
-    //         }  
-
-    //         const result = await response.json();  
-    //         console.log('Успех:', result);  
-    //         alert('Данные успешно отправлены!');  
-
-    //     } catch (error) {  
-    //         console.error('Ошибка:', error);  
-    //         alert('Произошла ошибка при отправке данных.');  
-    //     }  
-    // }
 
 
 
