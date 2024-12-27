@@ -1,6 +1,8 @@
-import { findCity, formattDate, sendDataToServer } from "./citiesData.js"
+import { findCity, formattDate, sendDataToServer, checkIsActiveGandivaIdForAddForm } from "./citiesData.js"
 
 import { formHotelHTML, citiesContainerHTML, formCityHTML } from "./html.js"
+
+
 
 // Константы Модалки
 const modal = document.getElementById("myModal")
@@ -57,9 +59,11 @@ const addForm = () => {
 const gandivaId = new URLSearchParams(window.location.search).get('gandiva_id')
 console.log(gandivaId)
 
-const usersId = ['12345', '1234']
 
-if (usersId.includes(gandivaId)) {
+const isActiveGandivaId = await checkIsActiveGandivaIdForAddForm(gandivaId)
+console.log(`isActiveGandivaId: ${isActiveGandivaId}`)
+
+if (!isActiveGandivaId){
     addForm();
 }
 
@@ -67,6 +71,9 @@ if (usersId.includes(gandivaId)) {
 // Константы Формы
 const citiesContainer = document.getElementById('citiesContainer')
 
+
+// TODO: Проверка на существование citiesContainer перед добавлением обработчика событий
+// if (citiesContainer)
 
 
 // Обработчик для контейнера городов
@@ -218,6 +225,14 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
         // Дата вылета
         cityData.departureTime = cityDiv.querySelector('input[name="departureTime"]').value
+
+        // Организация назначения
+        const arrivalOrganizationInput = cityData.arrivalOrganization = cityDiv.querySelector('input[name="arrivalOrganization"]')
+        cityData.arrivalOrganization = arrivalOrganizationInput ? arrivalOrganizationInput.value : null
+        // if (arrivalOrganizationInput) {
+        //     cityData.arrivalOrganization = arrivalOrganizationInput.value;
+        // }
+
 
         // Тип Билета
         const selectElement = cityDiv.querySelector('select[name="tickets"]')
@@ -384,6 +399,9 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
           <h3>Город назначения: <span>${cityData.arrivalCity}</span></h3>
 
+
+          ${cityData.arrivalOrganization ? `<h3>Организация назначения: <span>${cityData.arrivalOrganization}</span></h3>`: ''}
+
           <h3>Дата вылета из города отправления: <span>${departureTimeFormatt}</span></h3>
 
           <h3>Тип билета: <span>${cityData.typeTickets}</span></h3>
@@ -431,6 +449,13 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
             document.querySelector('input[name="departureTime"]').value = cityData.departureTime
 
+            // У Конечной Точки нет Поля Организация
+            if (cityData.arrivalOrganization){
+
+                document.querySelector('input[name="arrivalOrganization"]').value = cityData.arrivalOrganization
+            }
+
+
             const selectElement = document.querySelector('select[name="tickets"]');
             const option = selectElement.querySelector(`option[value="${cityData.typeTickets}"]`)
             if (option) {
@@ -466,90 +491,60 @@ document.getElementById('travelForm').addEventListener('submit', async function 
 
 
     // Обработчик событий для кнопки "Отправить"
-    document.querySelector('.acceptTravelForm').addEventListener('click', function () {
+    document.querySelector('.acceptTravelForm').addEventListener('click', async function () {
+
+        containerCheckData.style.display = 'none'
 
         console.log(cityDataArray)
 
-        containerCheckData.style.display = 'none'
-        // Сообщение "Данные успешно отправлены"
-        document.getElementById('successMessage').style.display = 'block'
-
         // Преобразование данных перед отправкой
-        //     const transformedCityDataArray = cityDataArray.map(cityData => ({
-        //         gandiva_id: gandivaId,
-        //         city1: cityData.departureCity,
-        //         city2: cityData.arrivalCity,
-        //         fly_start: cityData.departureTime,
-        //         ticket_type: cityData.typeTickets,
-        //         flight_comment: cityData.flightComment,
-        //         booking_required: cityData.bookingRequired ? cityData.bookingRequired : false,
-        //         hotel_name: cityData.bookingRequired ? cityData.hotelName : null,
-        //         arrival_date_to_hotel: cityData.bookingRequired ? cityData.arrivalDateToHotel : null,
-        //         departure_date_to_hotel: cityData.bookingRequired ? cityData.departureDateToHotel : null,
-        //         hotel_comment: cityData.bookingRequired ? cityData.hotelComment : null,
-        //     }
-        // ));
-
         const transformedCityDataArray = cityDataArray.map(cityData => {
+
             const dataToSend = {
-                gandiva_id: gandivaId,
+                gandiva_id: Number(gandivaId),
                 city1: cityData.departureCity,
                 city2: cityData.arrivalCity,
-                fly_start: cityData.departureTime,
-                ticket_type: cityData.typeTickets,
-                flight_comment: cityData.flightComment,
-                booking_required: cityData.bookingRequired ? cityData.bookingRequired : false,
-                hotel_name: cityData.bookingRequired ? cityData.hotelName : null,
-                arrival_date_to_hotel: cityData.bookingRequired ? cityData.arrivalDateToHotel : null,
-                departure_date_to_hotel: cityData.bookingRequired ? cityData.departureDateToHotel : null,
-                hotel_comment: cityData.bookingRequired ? cityData.hotelComment : null,
-            };
+                fly_start: new Date(cityData.departureTime).toISOString(),
+                need_hotel: cityData.bookingRequired ? true : false,
+                name_hotel: cityData.bookingRequired ? cityData.hotelName : null,
+                arrival_date: cityData.bookingRequired ? new Date(cityData.arrivalDateToHotel).toISOString() : null,
+                eviction_date: cityData.bookingRequired ? new Date(cityData.departureDateToHotel).toISOString() : null,
+                comment_hotel: cityData.bookingRequired ? cityData.hotelComment : null,
+                fly_comment: cityData.flightComment,
+                bilet_type: cityData.typeTickets,
+                to_org: cityData.arrivalOrganization
+            }
 
             // Фильтруем свойства, чтобы исключить null значения
             return Object.fromEntries(
                 Object.entries(dataToSend).filter(([_, v]) => v !== null)
-            );
-        });
+            )
+        })
 
 
-        console.log(transformedCityDataArray)
 
-        // sendDataToServer(transformedCityDataArray)
+        // Передача данных на сервер
+        const response = await sendDataToServer(transformedCityDataArray)
+
+        const successMessage = document.getElementById('successMessage')
+        successMessage.style.display = 'block'
+
+        // Если error - false
+        if (!response){
+            successMessage.innerHTML = `Данные успешно отправлены!`
+        }else{
+            successMessage.innerHTML = `Ошибка при отправке данных. Обновите страницу и попробуйте еще раз!`
+        }
+
+        
+
+          
 
 
 
 
 
     })
-
-
-
-
-
-
-
-
-    // Отправка данных на бекенд
-    // fetch('https://your-backend-url.com/api/submit', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data), // Преобразуем объект в JSON
-    // })
-    // .then(response => response.json())
-    // .then(result => {
-    //     console.log('Успех:', result);
-    //     alert('Данные успешно отправлены!');
-    // })
-    // .catch(error => {
-    //     console.error('Ошибка:', error);
-    //     alert('Произошла ошибка при отправке данных.');
-    // });
-
-
-
-
 
 })
 

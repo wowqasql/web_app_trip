@@ -1,30 +1,48 @@
-// Передача данных на сервер
+export const checkIsActiveGandivaIdForAddForm = async (gandiva_id) => {
 
-export async function sendDataToServer(data) {
+  const url = `http://ink-rpadev.irkoil.local:8080/trip_aiss/mmk_trip_check?gandiva_id=${gandiva_id}`
+  let responseData
   try {
-    const response = await fetch('https://your-backend-url.com/api/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+       const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
 
-    // Проверка на успешный ответ  
-    if (!response.ok) {
-      throw new Error(`HTTP ошибка! статус ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log('Успех:', result);
-    alert('Данные успешно отправлены!');
-
+      responseData = await response.json()
+      console.log("Данные успешно отправлены!")
+      console.log("Ответ от сервера:", responseData)
   } catch (error) {
-    console.error('Ошибка:', error);
-    alert('Произошла ошибка при отправке данных.');
+      console.error("Ошибка при отправке данных:", error.message)
   }
+  return responseData.value
 }
 
+
+
+export const sendDataToServer = async (data) => {
+    const url = 'http://ink-rpadev.irkoil.local:8080/trip_aiss/mmk_create'
+    let responseData
+    try {
+         const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        responseData = await response.json()
+        console.log("Данные успешно отправлены!")
+        console.log("Ответ от сервера:", responseData)
+        console.log(responseData.error)
+
+    } catch (error) {
+        console.error("Ошибка при отправке данных:", error.message)
+    }
+    return responseData.error
+}
 
 // Форматирование дат в читаемый вид
 export const formattDate = (date) => {

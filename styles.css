@@ -252,3 +252,8 @@ button:hover {
     max-height: 500px; /* Максимальная высота при открытии */
 }
 
+#successMessage {
+    display: none;
+    text-align: center;
+    
+}
